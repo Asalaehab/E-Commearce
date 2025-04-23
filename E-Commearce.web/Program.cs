@@ -24,6 +24,7 @@ namespace E_Commearce.web
             var app = builder.Build();
 
 
+
             #region Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
