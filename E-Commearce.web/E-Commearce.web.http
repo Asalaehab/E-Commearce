@@ -1,0 +1,6 @@
+@E_Commearce.web_HostAddress = http://localhost:5166
+
+GET {{E_Commearce.web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
