@@ -32,11 +32,11 @@ namespace Peristance
                 {
                     var ProductBrandData = File.ReadAllText(@"..\Infrastructure\Peristance\Data\DataSeed\brands.json");
 
-                    var ProductBrands = JsonSerializer.Deserialize<List<ProductBrand>>(ProductBrandData);
+                    var ProductBrandsList = JsonSerializer.Deserialize<List<ProductBrand>>(ProductBrandData);
 
-                    if (ProductBrands is not null && ProductBrands.Any())
-                        _dbcontext.ProductBrands.AddRange(ProductBrands);
-
+                    if (ProductBrandsList is not null && ProductBrandsList.Any())
+                        _dbcontext.ProductBrands.AddRange(ProductBrandsList);
+                  
                 }
 
 
@@ -46,10 +46,11 @@ namespace Peristance
 
                     var ProductTypesData = File.ReadAllText(@"..\Infrastructure\Peristance\Data\DataSeed\types.json");
 
-                    var ProductTypes = JsonSerializer.Deserialize<List<ProductType>>(ProductTypesData);
+                    var ProductTypesList = JsonSerializer.Deserialize<List<ProductType>>(ProductTypesData);
 
-                    if (ProductTypes is not null && ProductTypes.Any())
-                        _dbcontext.ProductTypes.AddRange(ProductTypes);
+                    if (ProductTypesList is not null && ProductTypesList.Any())
+                        _dbcontext.ProductTypes.AddRange(ProductTypesList);
+                  
                 }
 
 
@@ -57,13 +58,15 @@ namespace Peristance
                 {
                     var ProductsData = File.ReadAllText(@"..\Infrastructure\Peristance\Data\DataSeed\products.json");
 
-                    var products = JsonSerializer.Deserialize<List<Product>>(ProductsData);
+                    var productsList = JsonSerializer.Deserialize<List<Product>>(ProductsData);
 
-                    if (products is not null && products.Any())
-                        _dbcontext.Products.AddRange(products);
+                    if (productsList is not null && productsList.Any())
+                        _dbcontext.Products.AddRange(productsList);
+                   
 
                 }
                 _dbcontext.SaveChanges();
+
             }
             catch
             {

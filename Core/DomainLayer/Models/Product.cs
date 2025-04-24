@@ -19,11 +19,11 @@ namespace DomainLayer.Models
         public ProductBrand productBrand { get; set; } = null!;
 
 
-        public int ProductBrandId { get; set; }//FK
+        public int BrandId { get; set; }//FK
 
 
         public ProductType productType { get; set; } = null!;
 
-        public int ProductTypeId { get; set; }//Fk
+        public int TypeId { get; set; }//Fk
     }
 }

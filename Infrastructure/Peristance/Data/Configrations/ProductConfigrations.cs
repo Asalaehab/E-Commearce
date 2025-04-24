@@ -15,11 +15,15 @@ namespace Peristance.Data.Configrations
         {
             builder.HasOne(P => P.productBrand)
                    .WithMany()
-                   .HasForeignKey(P => P.ProductBrandId);
+                   .HasForeignKey(P => P.BrandId);
 
 
             builder.Property(P => P.Price)
                 .HasColumnType("decimal(10,2)");
+
+            builder.HasOne(P => P.productType)
+                   .WithMany()
+                   .HasForeignKey(P => P.TypeId);
         }
     }
 }
