@@ -1,4 +1,10 @@
 
+using DomainLayer.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Peristance;
+using Peristance.Data;
+
 namespace E_Commearce.web
 {
     public class Program
@@ -17,14 +23,21 @@ namespace E_Commearce.web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+            builder.Services.AddDbContext<StoreDbContext>(Options=>
+            {
+                Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             #endregion
 
 
             var app = builder.Build();
 
+          using  var scope=app.Services.CreateScope();
 
-
+           var ObjectOfDataSeeding= scope.ServiceProvider.GetRequiredService<IDataSeeding>();
+            ObjectOfDataSeeding.DataSeed();
             #region Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
