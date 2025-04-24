@@ -1,4 +1,8 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Peristance.Data;
+
 namespace E_Commearce.web
 {
     public class Program
@@ -17,6 +21,10 @@ namespace E_Commearce.web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<StoreDbContext>(Options=>
+            {
+                Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             #endregion
 
