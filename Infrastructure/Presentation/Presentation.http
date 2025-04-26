@@ -1,0 +1,6 @@
+﻿@Presentation_HostAddress = 
+
+GET {{Presentation_HostAddress}}/api/Products
+
+###
+GET {{Presentation_HostAddress}}/api/Products
