@@ -61,7 +61,7 @@ namespace E_Commearce.web
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 
