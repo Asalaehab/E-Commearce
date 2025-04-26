@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Peristance;
 using Peristance.Data;
+using Peristance.Repositiories;
+using Service;
+using Service.MappingProfiles;
+using ServiceAbstraction;
 
 namespace E_Commearce.web
 {
@@ -17,27 +21,36 @@ namespace E_Commearce.web
 
             #region Add services to the container.
 
-       
-            
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddDbContext<StoreDbContext>(Options=>
+            builder.Services.AddDbContext<StoreDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(ProductProfile).Assembly);
+            builder.Services.AddScoped<IServiceManager, serviceManager>();
             #endregion
 
 
             var app = builder.Build();
 
-          using  var scope=app.Services.CreateScope();
 
-           var ObjectOfDataSeeding= scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeeding.DataSeed();
+            #region DataSeeding
+
+            using var scope = app.Services.CreateScope();
+
+            var ObjectOfDataSeeding = scope.ServiceProvider.GetRequiredService<IDataSeeding>();
+            ObjectOfDataSeeding.DataSeedAsync(); 
+            #endregion
+
+
+
             #region Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
@@ -48,11 +61,11 @@ namespace E_Commearce.web
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseAuthorization();
 
 
-            app.MapControllers(); 
+            app.MapControllers();
             #endregion
 
             app.Run();
