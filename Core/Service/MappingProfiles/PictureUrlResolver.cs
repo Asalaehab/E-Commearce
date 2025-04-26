@@ -17,7 +17,7 @@ namespace Service.MappingProfiles
         public string Resolve(Product source, ProductDto destination, string destMember, ResolutionContext context)
         {
             if (string.IsNullOrWhiteSpace(source.PictureUrl))
-                return string.Empty;.
+                return string.Empty;
 
             else
             {
