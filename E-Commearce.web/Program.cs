@@ -17,14 +17,14 @@ namespace E_Commearce.web
 
             #region Add services to the container.
 
-       
-            
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddDbContext<StoreDbContext>(Options=>
+            builder.Services.AddDbContext<StoreDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -34,10 +34,17 @@ namespace E_Commearce.web
 
             var app = builder.Build();
 
-          using  var scope=app.Services.CreateScope();
 
-           var ObjectOfDataSeeding= scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeeding.DataSeed();
+            #region DataSeeding
+
+            using var scope = app.Services.CreateScope();
+
+            var ObjectOfDataSeeding = scope.ServiceProvider.GetRequiredService<IDataSeeding>();
+            ObjectOfDataSeeding.DataSeed(); 
+            #endregion
+
+
+
             #region Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
@@ -52,7 +59,7 @@ namespace E_Commearce.web
             app.UseAuthorization();
 
 
-            app.MapControllers(); 
+            app.MapControllers();
             #endregion
 
             app.Run();
