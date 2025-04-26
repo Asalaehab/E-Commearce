@@ -19,7 +19,7 @@ namespace Peristance.Repositiories
 
 
 
-        public async Task<TEntity?> GetById(Tkey id) => await _dbContext.Set<TEntity>().FindAsync(id);
+        public async Task<TEntity?> GetByIdAsync(Tkey id) => await _dbContext.Set<TEntity>().FindAsync(id);
         
 
 

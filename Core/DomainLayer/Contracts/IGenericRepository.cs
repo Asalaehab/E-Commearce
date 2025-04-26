@@ -11,7 +11,7 @@ namespace DomainLayer.Contracts
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        Task<TEntity?> GetById(Tkey id);
+        Task<TEntity?> GetByIdAsync(Tkey id);
 
         Task AddAsync(TEntity entity);
 

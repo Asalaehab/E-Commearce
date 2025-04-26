@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Peristance;
 using Peristance.Data;
+using Peristance.Repositiories;
 
 namespace E_Commearce.web
 {
@@ -23,12 +24,12 @@ namespace E_Commearce.web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddDbContext<StoreDbContext>(Options =>
             {
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
 
 
@@ -40,7 +41,7 @@ namespace E_Commearce.web
             using var scope = app.Services.CreateScope();
 
             var ObjectOfDataSeeding = scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeeding.DataSeed(); 
+            ObjectOfDataSeeding.DataSeedAsync(); 
             #endregion
 
 
