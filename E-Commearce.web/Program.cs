@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Peristance;
 using Peristance.Data;
 using Peristance.Repositiories;
+using Service.MappingProfiles;
 
 namespace E_Commearce.web
 {
@@ -30,6 +31,7 @@ namespace E_Commearce.web
             });
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(ProductProfile).Assembly);
             #endregion
 
 
