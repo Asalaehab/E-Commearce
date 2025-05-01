@@ -13,5 +13,7 @@ namespace shared
         public int? BrandId { get; set; }
 
         public ProductSortingOptions sortingOptions { get; set; }
+
+        public string? SearchValue { get; set; }
     }
 }

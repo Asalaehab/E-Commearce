@@ -13,7 +13,8 @@ namespace Service.Specifications
         //Get All Products with Types and Brands
         public ProductWityhBrandSpecifications(ProductQueryParams queryParams) :
             base(p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.BrandId)
-            &&(!queryParams.TypeId.HasValue  || queryParams.TypeId == p.BrandId))
+            &&(!queryParams.TypeId.HasValue  || queryParams.TypeId == p.BrandId)
+            &&(string.IsNullOrWhiteSpace(queryParams.SearchValue)||p.Name.ToLower().Contains(queryParams.SearchValue.ToLower())))
         {
             AddInclude(p=>p.productType);
             AddInclude(p => p.productBrand);
