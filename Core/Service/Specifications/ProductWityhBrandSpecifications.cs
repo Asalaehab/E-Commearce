@@ -10,7 +10,9 @@ namespace Service.Specifications
     class ProductWityhBrandSpecifications :BaseSpecifications<Product,int>
     {
         //Get All Products with Types and Brands
-        public ProductWityhBrandSpecifications():base(null)
+        public ProductWityhBrandSpecifications(int? BrandId,int? TypeId):
+            base(p => (!BrandId.HasValue || BrandId == p.BrandId)
+            &&(!TypeId.HasValue  || TypeId==p.BrandId))
         {
             AddInclude(p=>p.productType);
             AddInclude(p => p.productBrand);
