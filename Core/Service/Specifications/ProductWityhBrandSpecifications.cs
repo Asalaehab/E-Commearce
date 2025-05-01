@@ -11,14 +11,14 @@ namespace Service.Specifications
     class ProductWityhBrandSpecifications :BaseSpecifications<Product,int>
     {
         //Get All Products with Types and Brands
-        public ProductWityhBrandSpecifications(int? BrandId,int? TypeId, ProductSortingOptions SortingOptions) :
-            base(p => (!BrandId.HasValue || BrandId == p.BrandId)
-            &&(!TypeId.HasValue  || TypeId==p.BrandId))
+        public ProductWityhBrandSpecifications(ProductQueryParams queryParams) :
+            base(p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.BrandId)
+            &&(!queryParams.TypeId.HasValue  || queryParams.TypeId == p.BrandId))
         {
             AddInclude(p=>p.productType);
             AddInclude(p => p.productBrand);
 
-            switch (SortingOptions)
+            switch (queryParams.sortingOptions)
             {
                 case ProductSortingOptions.NameAsc:
                     AddOrderBy(p => p.Name);
