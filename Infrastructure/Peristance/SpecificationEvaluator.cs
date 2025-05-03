@@ -38,6 +38,11 @@ namespace Peristance
                 Query = specifications.IncludeExpression.Aggregate(Query, (CurrentQuery, IncludeExp) => CurrentQuery.Include(IncludeExp));
             }
 
+
+            if (specifications.IsPaganied)
+            {
+                Query=Query.Skip(specifications.Skip).Take(specifications.Take);
+            }
             return Query;
         }
     }
