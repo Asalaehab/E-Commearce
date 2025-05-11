@@ -24,5 +24,6 @@ namespace DomainLayer.Contracts
 
         public bool IsPaganied { get;  }
 
+
     }
 }

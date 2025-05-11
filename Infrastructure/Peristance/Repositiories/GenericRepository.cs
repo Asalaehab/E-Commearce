@@ -35,6 +35,9 @@ namespace Peristance.Repositiories
         {
             return await SpecificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).FirstOrDefaultAsync();
         }
+
+        public Task<int> CountAsync(ISpecifications<TEntity, Tkey> specifications)
+       => SpecificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).CountAsync();
         #endregion
     }
 }
