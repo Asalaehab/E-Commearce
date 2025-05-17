@@ -1,4 +1,5 @@
-﻿using shared.ErrorModels;
+﻿using DomainLayer.Exceptions;
+using shared.ErrorModels;
 using System.Net;
 using System.Text.Json;
 
@@ -20,11 +21,30 @@ namespace E_Commearce.web.CustomeMiddleWare
             try
             {
                 await _next.Invoke(context);
+
+                if(context.Response.StatusCode==StatusCodes.Status404NotFound)
+                {
+                    var Response = new ErrorToReturn()
+                    {
+                        StatusCode = StatusCodes.Status404NotFound,
+                        ErrorMessage=$"End Point {context.Request.Path} is Not Found"
+                    };
+
+
+                  await  context.Response.WriteAsJsonAsync(Response);
+                }
+
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "SomeThing Went Wrong");
 
+                context.Response.StatusCode = ex switch
+                {
+                    NotFoundException =>StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
 
                 //set status Code for Response
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
