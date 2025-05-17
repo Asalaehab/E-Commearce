@@ -1,5 +1,6 @@
 
 using DomainLayer.Contracts;
+using E_Commearce.web.CustomeMiddleWare;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Peristance;
@@ -46,7 +47,7 @@ namespace E_Commearce.web
             using var scope = app.Services.CreateScope();
 
             var ObjectOfDataSeeding = scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeeding.DataSeedAsync(); 
+            ObjectOfDataSeeding.DataSeedAsync();
             #endregion
 
 
@@ -54,6 +55,21 @@ namespace E_Commearce.web
             #region Configure the HTTP request pipeline.
 
             // Configure the HTTP request pipeline.
+            //app.Use(async(RequestContext,NextMiddleWare)=>
+            //{
+            //    Console.WriteLine("Request Under Processing");
+            //    await NextMiddleWare.Invoke();
+
+            //    Console.WriteLine("Waiting Repsponse");
+
+            //    Console.WriteLine(RequestContext.Response.Body);
+
+            //});
+
+            
+
+            app.UseMiddleware<CustomExceptionhandlerMiddleWare>();
+            
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
