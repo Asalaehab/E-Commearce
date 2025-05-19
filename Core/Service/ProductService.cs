@@ -46,15 +46,15 @@ namespace Service
 
         public async Task<ProductDto> GetProductByIdAsync(int id)
         {
-            var productWithBrand=new ProductWityhBrandSpecifications(id);
+            var productWithBrand = new ProductWityhBrandSpecifications(id);
             var product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(productWithBrand);
-            if(product is  null)
+            if (product is null)
             {
                 throw new ProductNotFoundException(id);
             }
 
 
-                var productDto = _mapper.Map<Product, ProductDto>(product);
+            var productDto = _mapper.Map<Product, ProductDto>(product);
             return productDto;
 
         }

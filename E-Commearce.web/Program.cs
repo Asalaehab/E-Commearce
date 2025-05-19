@@ -1,6 +1,8 @@
 
 using DomainLayer.Contracts;
 using E_Commearce.web.CustomeMiddleWare;
+using E_Commearce.web.Factories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Peristance;
@@ -9,6 +11,7 @@ using Peristance.Repositiories;
 using Service;
 using Service.MappingProfiles;
 using ServiceAbstraction;
+using shared.ErrorModels;
 
 namespace E_Commearce.web
 {
@@ -36,6 +39,12 @@ namespace E_Commearce.web
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(ProductProfile).Assembly);
             builder.Services.AddScoped<IServiceManager, serviceManager>();
+            builder.Services.Configure<ApiBehaviorOptions>((Options) =>
+            {
+                Options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiErrorReponse;
+               
+            });
+            
             #endregion
 
 

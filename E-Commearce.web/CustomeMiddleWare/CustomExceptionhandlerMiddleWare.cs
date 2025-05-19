@@ -55,12 +55,12 @@ namespace E_Commearce.web.CustomeMiddleWare
                 //response object
                 var response = new ErrorToReturn()
                 {
-                    StatusCode = StatusCodes.Status500InternalServerError,
+                    StatusCode = context.Response.StatusCode,
                     ErrorMessage = ex.Message
                 };
 
                
-                var ResponseToReturn=JsonSerializer.Serialize(response);
+               var ResponseToReturn=JsonSerializer.Serialize(response);
 
                await context.Response.WriteAsync(ResponseToReturn);
 
