@@ -13,6 +13,7 @@ using Service;
 using Service.MappingProfiles;
 using ServiceAbstraction;
 using shared.ErrorModels;
+using StackExchange.Redis;
 using System.Threading.Tasks;
 
 namespace E_Commearce.web
@@ -39,7 +40,6 @@ namespace E_Commearce.web
             builder.Services.AddApplicationService();
             builder.Services.AddWebApplicationServices(); 
            
-            
             #endregion
 
 
