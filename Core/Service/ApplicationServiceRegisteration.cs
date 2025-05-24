@@ -16,6 +16,7 @@ namespace Service
         {
             services.AddAutoMapper(typeof(ProductProfile).Assembly);
             services.AddScoped<IServiceManager, serviceManager>();
+            services.AddScoped<IBasketService, BasketService>();
             return services;
         }
 
