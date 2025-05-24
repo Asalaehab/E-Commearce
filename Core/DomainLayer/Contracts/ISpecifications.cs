@@ -18,5 +18,12 @@ namespace DomainLayer.Contracts
 
         Expression<Func<TEntity,object>> OrderByDescending { get; }
 
+        public int Take { get; }
+
+        public int Skip { get;  }
+
+        public bool IsPaganied { get;  }
+
+
     }
 }

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Models
+namespace shared.ErrorModels
 {
-    public class ProductBrand:BaseEntity<int>
+    public class ErrorModels
     {
-        public string Name { get; set; } = null!;
-
 
     }
 }

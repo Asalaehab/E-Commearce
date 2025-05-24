@@ -1,4 +1,4 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.Models.ProductModels;
 using shared;
 using System;
 using System.Collections.Generic;
@@ -39,6 +39,8 @@ namespace Service.Specifications
                 default:
                     break;
             }
+
+            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
         }
 
         public ProductWityhBrandSpecifications(int id) : base(p => p.Id == id)
