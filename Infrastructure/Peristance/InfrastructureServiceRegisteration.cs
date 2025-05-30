@@ -1,5 +1,7 @@
 ﻿
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Peristance.Identity;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,12 @@ namespace Peristance
             {
                 return ConnectionMultiplexer.Connect(Configuration.GetConnectionString("RedisConnectionString"));
             });
+
+            Services.AddDbContext<StoreIdentityDbContext>(Options =>
+            {
+                Options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"));
+            });
+
             return Services;
         }
     }
