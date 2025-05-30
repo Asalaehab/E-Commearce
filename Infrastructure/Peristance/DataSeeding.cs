@@ -1,7 +1,10 @@
 ﻿using DomainLayer.Contracts;
+using DomainLayer.Models.IdentityModels;
 using DomainLayer.Models.ProductModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Peristance.Data;
+using Peristance.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,10 @@ using System.Threading.Tasks;
 
 namespace Peristance
 {
-    public class DataSeeding(StoreDbContext _dbcontext) : IDataSeeding
+    public class DataSeeding(StoreDbContext _dbcontext,
+        UserManager<ApplicationUser> _userManager,
+        RoleManager<IdentityRole> _roleManager,
+        StoreIdentityDbContext _context) : IDataSeeding
     {
         public async Task DataSeedAsync()
         {
@@ -74,6 +80,48 @@ namespace Peristance
             }
 
 
+        }
+
+        public async Task IdentityDataSeedAsync()
+        {
+            try
+            {
+                if (!_roleManager.Roles.Any())
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+                }
+
+                if (!_userManager.Users.Any())
+                {
+                    var User01 = new ApplicationUser()
+                    {
+                        Email = "Mohamed@gmail.com",
+                        DisplayName = "Mohamed Tarek",
+                        PhoneNumber = "01149114891",
+                        UserName = "MohamedTarek"
+                    };
+
+                    var User02 = new ApplicationUser()
+                    {
+                        Email = "Salma@gmail.com",
+                        DisplayName = "Salma Aly",
+                        PhoneNumber = "01124926497",
+                        UserName = "SalmaAly"
+                    };
+
+                    await _userManager.CreateAsync(User01, "Pa$sw0rd");
+                    await _userManager.CreateAsync(User02, "Pa$sw0rd");
+
+                    await _userManager.AddToRoleAsync(User01, "Admin");
+                    await _userManager.AddToRoleAsync(User02, "SuperAdmin");
+                }
+                _context.SaveChanges();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
