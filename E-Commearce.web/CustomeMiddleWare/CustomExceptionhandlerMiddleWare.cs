@@ -43,6 +43,8 @@ namespace E_Commearce.web.CustomeMiddleWare
                 context.Response.StatusCode = ex switch
                 {
                     NotFoundException =>StatusCodes.Status404NotFound,
+                    UnauthorizedAccessException =>StatusCodes.Status404NotFound,
+                    BadRequestException =>StatusCodes.Status400BadRequest,
                     _ => StatusCodes.Status500InternalServerError
                 };
 
