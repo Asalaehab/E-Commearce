@@ -38,39 +38,34 @@ namespace E_Commearce.web.CustomeMiddleWare
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "SomeThing Went Wrong");
+       
+                _logger.LogError(ex, "Something Went Wrong");
 
                 context.Response.StatusCode = ex switch
                 {
-                    NotFoundException =>StatusCodes.Status404NotFound,
-                    UnauthorizedAccessException =>StatusCodes.Status404NotFound,
-                    BadRequestException =>StatusCodes.Status400BadRequest,
+                    NotFoundException => StatusCodes.Status404NotFound,
+                    UnauthorizedAccessException => StatusCodes.Status401Unauthorized, // use 401 for unauthorized
+                    BadRequestException => StatusCodes.Status400BadRequest,
                     _ => StatusCodes.Status500InternalServerError
                 };
 
-                //set status Code for Response
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.ContentType = "application/json";
 
-                //set Content type for response
-                context.Response.ContentType = "application/Json";
-
-                //response object
-                var response = new ErrorToReturn()
+                var response = new ErrorToReturn
                 {
                     StatusCode = context.Response.StatusCode,
                     ErrorMessage = ex.Message
                 };
 
-               
-               var ResponseToReturn=JsonSerializer.Serialize(response);
+                var responseToReturn = JsonSerializer.Serialize(response);
 
-               await context.Response.WriteAsync(ResponseToReturn);
-
-                //return objext As Json
-
+                await context.Response.WriteAsync(responseToReturn);
             }
 
 
-        }
+        
+
+
+    }
     }
 }

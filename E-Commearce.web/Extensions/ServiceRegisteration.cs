@@ -29,7 +29,7 @@ namespace E_Commearce.web.Extensions
         }
 
 
-        public static IServiceCollection AddJWTService(this IServiceCollection Services,IConfiguration configuration)
+        public static IServiceCollection AddJWTService(this IServiceCollection Services, IConfiguration configuration)
         {
             Services.AddAuthentication(Options =>
             {
@@ -48,7 +48,7 @@ namespace E_Commearce.web.Extensions
                     ValidAudience = configuration["JWTOptions:Audience"],
 
                     ValidateLifetime = true,
-                    IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWTOptions")["SecretKey"]!))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWTOptions")["SecretKey"]!))
                 };
             });
 
