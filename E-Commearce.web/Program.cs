@@ -38,8 +38,9 @@ namespace E_Commearce.web
             builder.Services.AddSwaggerService();
             builder.Services.AddInfrastructureService(builder.Configuration);
             builder.Services.AddApplicationService();
-            builder.Services.AddWebApplicationServices(); 
-           
+            builder.Services.AddWebApplicationServices();
+            builder.Services.AddJWTService(builder.Configuration);
+
             #endregion
 
 
@@ -80,6 +81,8 @@ namespace E_Commearce.web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

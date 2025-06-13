@@ -12,6 +12,8 @@ namespace E_Commearce.web.Extensions
 
             var ObjectOfDataSeeding = scope.ServiceProvider.GetRequiredService<IDataSeeding>();
             await ObjectOfDataSeeding.DataSeedAsync();
+            await ObjectOfDataSeeding.IdentityDataSeedAsync();
+            
 
             
         }

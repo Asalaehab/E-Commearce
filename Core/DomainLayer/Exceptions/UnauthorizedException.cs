@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Contracts
+namespace DomainLayer.Exceptions
 {
-    public interface IDataSeeding
+    public class UnauthorizedException(string Msg="InValid Email Or Password"):Exception(Msg)
     {
-        Task DataSeedAsync();
-
-        Task IdentityDataSeedAsync();
     }
 }

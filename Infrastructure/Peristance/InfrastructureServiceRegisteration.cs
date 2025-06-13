@@ -1,4 +1,6 @@
 ﻿
+using DomainLayer.Models.IdentityModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Peristance.Identity;
@@ -32,8 +34,11 @@ namespace Peristance
             {
                 Options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"));
             });
-
+            Services.AddIdentityCore<ApplicationUser>()
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<StoreIdentityDbContext>();
             return Services;
+
         }
     }
 }
