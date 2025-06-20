@@ -3,6 +3,7 @@ using DomainLayer.Contracts;
 using DomainLayer.Exceptions;
 using DomainLayer.Models.OrderModels;
 using DomainLayer.Models.ProductModels;
+using Service.Specifications;
 using ServiceAbstraction;
 using shared.DataTransferObjects.IdentityDTO_S;
 using shared.DataTransferObjects.OrderDTO_S;
@@ -60,6 +61,26 @@ namespace Service
                 Price = product.Price,
                 Quantity = item.Quantity
             };
+        }
+
+        public async Task<IEnumerable<DeliveryMethodsDto>> GetDeliveryMethodsAsync()
+        {
+            var DeliveryMethods = await _unitOfWork.GetRepository<DeliveryMethod, int>().GetAllAsync();
+            return _mapper.Map<IEnumerable<DeliveryMethod>, IEnumerable<DeliveryMethodsDto>>(DeliveryMethods);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetAllOrdersAsync(string Email)
+        {
+            var spec=new OrderModuleSpecifications(Email);
+            var Orders=await _unitOfWork.GetRepository<Order,Guid>().GetAllAsync(spec);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(Orders);
+        }
+
+        public async Task<OrderToReturn> GetOrderByIdAsync(Guid id)
+        {
+            var spec = new OrderModuleSpecifications(id);
+            var Order =await _unitOfWork.GetRepository<Order, Guid>().GetByIdAsync(id);
+            return _mapper.Map<OrderToReturn>(Order);   
         }
     }
 }

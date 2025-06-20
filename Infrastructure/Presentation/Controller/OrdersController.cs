@@ -28,5 +28,17 @@ namespace Presentation.Controller
             return Ok(Order);
         }
 
+
+        //Get Delivery Methods
+        //[HttpGet("DeliveryMethod")]
+        //public Task<ActionResult<IEnumerable<DeliveryMethodsDto>>>
+
+
+        //Get All Order By Email
+
+        //Get Order By Id
+
+
+
     }
 }
