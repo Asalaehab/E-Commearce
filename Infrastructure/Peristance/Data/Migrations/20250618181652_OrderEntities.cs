@@ -19,7 +19,7 @@ namespace Peristance.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    DeliveryItem = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    DeliveryTime = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false)
                 },
                 constraints: table =>

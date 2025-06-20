@@ -12,7 +12,7 @@ namespace DomainLayer.Models.OrderModels
 
         public string Description { get; set; } = default!;
 
-        public string DeliveryItem { get; set; } = default!;
+        public string DeliveryTime { get; set; } = default!;
 
         public decimal Price { get; set; }
     }

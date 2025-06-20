@@ -18,7 +18,7 @@ namespace Peristance.Data.Configrations
                 .HasColumnType("varchar")
                 .HasMaxLength (100);
 
-            builder.Property(D => D.DeliveryItem)
+            builder.Property(D => D.DeliveryTime)
                 .HasColumnType("varchar")
                 .HasMaxLength(50);
 
