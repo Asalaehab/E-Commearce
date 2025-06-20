@@ -71,7 +71,18 @@ namespace Peristance
                    
 
                 }
-              await   _dbcontext.SaveChangesAsync();
+                if (!_dbcontext.Set<DeliveryMethod>().Any())
+                {
+                    var ProductsData = File.OpenRead(@"..\Infrastructure\Peristance\Data\DataSeed\delivery.json");
+
+                    var DeliveryMethodsList = await JsonSerializer.DeserializeAsync<List<DeliveryMethod>>(ProductsData);
+
+                    if (DeliveryMethodsList is not null && DeliveryMethodsList.Any())
+                        await _dbcontext.Set<DeliveryMethod>().AddRangeAsync(DeliveryMethodsList);
+
+
+                }
+                await   _dbcontext.SaveChangesAsync();
 
             }
             catch
