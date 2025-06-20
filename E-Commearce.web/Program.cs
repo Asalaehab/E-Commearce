@@ -15,6 +15,8 @@ using ServiceAbstraction;
 using shared.ErrorModels;
 using StackExchange.Redis;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json;
 
 namespace E_Commearce.web
 {
@@ -76,7 +78,27 @@ namespace E_Commearce.web
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(Options =>
+                {
+                    ////Options.ConfigObject
+                    //Options.ConfigObject = new ConfigObject()
+                    //{
+                    //     DisplayRequestDuration=true
+                    //};
+
+                    //Options.DocumentTitle = "My E-Commerace API";
+
+                    //Options.JsonSerializerOptions = new JsonSerializerOptions()
+                    //{
+                    //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    //};
+
+
+                    Options.DocExpansion(DocExpansion.Full);
+                    Options.EnableFilter(); 
+                    Options.EnablePersistAuthorization();
+                   
+                });
             }
 
             app.UseHttpsRedirection();

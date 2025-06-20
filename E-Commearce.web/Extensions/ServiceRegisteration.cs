@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Security.Cryptography.Xml;
 using System.Text;
 
 namespace E_Commearce.web.Extensions
@@ -12,7 +15,33 @@ namespace E_Commearce.web.Extensions
         public static IServiceCollection AddSwaggerService(this IServiceCollection Services)
         {
             Services.AddEndpointsApiExplorer();
-            Services.AddSwaggerGen();
+            Services.AddSwaggerGen(Options =>
+            {
+                Options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    In=ParameterLocation.Header,
+                    Name="AUthorization",
+                    Type=SecuritySchemeType.ApiKey,
+                    Scheme="Bearer",
+                    Description="Enter 'bearer ' follwed by space and your token",
+
+                });
+                Options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+
+            });
             return Services;
         }
 
