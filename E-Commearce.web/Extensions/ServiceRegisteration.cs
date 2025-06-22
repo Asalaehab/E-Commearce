@@ -17,15 +17,18 @@ namespace E_Commearce.web.Extensions
             Services.AddEndpointsApiExplorer();
             Services.AddSwaggerGen(Options =>
             {
+
                 Options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    In=ParameterLocation.Header,
-                    Name="AUthorization",
-                    Type=SecuritySchemeType.ApiKey,
-                    Scheme="Bearer",
-                    Description="Enter 'bearer ' follwed by space and your token",
+                    In = ParameterLocation.Header,
+                    Name = "AUthorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    Description = "Enter 'Bearer' follwed by space and your token",
 
                 });
+
+
                 Options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
