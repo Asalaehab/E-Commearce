@@ -8,5 +8,7 @@ namespace ServiceAbstraction
 {
     public interface ICashingService
     {
+        Task<string?> GetAsync(string cacheKey);
+        Task setAsync(string cacheKey, object cachevalue,TimeSpan timeToLive);
     }
 }
