@@ -38,6 +38,8 @@ namespace Service
             services.AddScoped<Func<IAuthentaction>>(Provider =>
             ()=>Provider.GetRequiredService<IAuthentaction>()
             );
+
+            services.AddScoped<ICashingService, CacheService>();
             return services;
         }
 
