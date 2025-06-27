@@ -11,7 +11,7 @@ namespace Service.Specifications
     public class OrderModuleSpecifications : BaseSpecifications<Order, Guid>
     {
         //Get All Orders By Email
-        public OrderModuleSpecifications(string Email) : base(O => O.UserEmail == Email)
+        public OrderModuleSpecifications(string Email) : base(O => O.BuyerEmail == Email)
         {
             AddInclude(O => O.DeliveryMethod);
             AddInclude(O => O.Items);

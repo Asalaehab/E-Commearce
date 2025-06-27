@@ -36,7 +36,15 @@ namespace E_Commearce.web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
            
 
-
+            builder.Services.AddCors(Options=>
+            {
+                Options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyHeader ();
+                    builder.AllowAnyMethod ();
+                    builder.AllowAnyOrigin ();
+                });
+            });
             builder.Services.AddSwaggerService();
             builder.Services.AddInfrastructureService(builder.Configuration);
             builder.Services.AddApplicationService();
@@ -104,10 +112,9 @@ namespace E_Commearce.web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
             #endregion
 

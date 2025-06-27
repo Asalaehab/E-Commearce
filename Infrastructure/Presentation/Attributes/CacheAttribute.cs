@@ -42,7 +42,7 @@ namespace Presentation.Attributes
 
             if (ExcutedContext.Result is OkObjectResult result)
             {
-              await  cacheService.setAsync(cacheKey, result.Value!, TimeSpan.FromSeconds(DurationInSec);
+              await  cacheService.setAsync(cacheKey, result.Value!, TimeSpan.FromSeconds(DurationInSec));
             }
         }
 

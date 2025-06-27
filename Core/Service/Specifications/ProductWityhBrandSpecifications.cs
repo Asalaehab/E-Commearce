@@ -14,12 +14,12 @@ namespace Service.Specifications
         public ProductWityhBrandSpecifications(ProductQueryParams queryParams) :
             base(p => (!queryParams.BrandId.HasValue || queryParams.BrandId == p.BrandId)
             &&(!queryParams.TypeId.HasValue  || queryParams.TypeId == p.BrandId)
-            &&(string.IsNullOrWhiteSpace(queryParams.SearchValue)||p.Name.ToLower().Contains(queryParams.SearchValue.ToLower())))
+            &&(string.IsNullOrWhiteSpace(queryParams.search)||p.Name.ToLower().Contains(queryParams.search.ToLower())))
         {
             AddInclude(p=>p.productType);
             AddInclude(p => p.productBrand);
 
-            switch (queryParams.sortingOptions)
+            switch (queryParams.sort)
             {
                 case ProductSortingOptions.NameAsc:
                     AddOrderBy(p => p.Name);
@@ -40,7 +40,7 @@ namespace Service.Specifications
                     break;
             }
 
-            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
+            ApplyPagination(queryParams.PageSize, queryParams.pageNumber);
         }
 
         public ProductWityhBrandSpecifications(int id) : base(p => p.Id == id)

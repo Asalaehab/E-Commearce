@@ -2,6 +2,8 @@
 {
     public class OrderItemDTO
     {
+
+        //public int productId { get; set; }
         public string ProductName { get; set; } = default!;
 
         public string PictureUrl { get; set; } = default!;
