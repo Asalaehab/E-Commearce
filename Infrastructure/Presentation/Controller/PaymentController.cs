@@ -13,8 +13,7 @@ namespace Presentation.Controller
     public class PaymentControlle(IServiceManager _serviceManager) : APIBaseController
     {
         [HttpPost("{BasketId}")]
-        public async Task<ActionResult<BasketDto>> CreateOrUpdatePaymentIntent(string BasketId)
-              
+        public async Task<ActionResult<BasketDto>> CreateOrUpdatePaymentIntent(string BasketId)    
         {
          var basket=  await _serviceManager.paymentService.CreateOrUpdatePaymentIntentAsync(BasketId);
             return Ok(basket);
