@@ -18,8 +18,8 @@ namespace shared.DataTransferObjects
 
         public decimal Price { get; set; }
 
-        public string BrandName { get; set; } = default!;
+        public string productBrand { get; set; } = default!;
 
-        public string TypeName { get; set; } = default!;
+        public string productType { get; set; } = default!;
     }
 }

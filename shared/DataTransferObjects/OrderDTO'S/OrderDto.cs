@@ -13,7 +13,7 @@ namespace shared.DataTransferObjects.OrderDTO_S
 
         public int DeliveryMethodId { get; set; }
 
-        public AddressDto Address { get; set; }=default!;
+        public AddressDto shipToAddress { get; set; }=default!;
 
 
     }

@@ -15,6 +15,8 @@ using ServiceAbstraction;
 using shared.ErrorModels;
 using StackExchange.Redis;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Text.Json;
 
 namespace E_Commearce.web
 {
@@ -34,7 +36,15 @@ namespace E_Commearce.web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
            
 
-
+            builder.Services.AddCors(Options=>
+            {
+                Options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyHeader ();
+                    builder.AllowAnyMethod ();
+                    builder.AllowAnyOrigin ();
+                });
+            });
             builder.Services.AddSwaggerService();
             builder.Services.AddInfrastructureService(builder.Configuration);
             builder.Services.AddApplicationService();
@@ -76,16 +86,35 @@ namespace E_Commearce.web
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(Options =>
+                {
+                    ////Options.ConfigObject
+                    //Options.ConfigObject = new ConfigObject()
+                    //{
+                    //     DisplayRequestDuration=true
+                    //};
+
+                    //Options.DocumentTitle = "My E-Commerace API";
+
+                    //Options.JsonSerializerOptions = new JsonSerializerOptions()
+                    //{
+                    //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    //};
+
+
+                    Options.DocExpansion(DocExpansion.Full);
+                    Options.EnableFilter(); 
+                    Options.EnablePersistAuthorization();
+                   
+                });
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseCors("AllowAll");
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
             #endregion
 

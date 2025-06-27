@@ -20,13 +20,19 @@ namespace Service
         public async Task<OrderToReturn> CreateOrder(OrderDto orderDto, string Email)
         {
             //Mapping Address to Order Address
-            var OrderAddress = _mapper.Map<AddressDto, OrderAddress>(orderDto.Address);
+            var OrderAddress = _mapper.Map<AddressDto, OrderAddress>(orderDto.shipToAddress);
 
             //Get basket
             var Basket =await _basketRepository.GetBasketAsync(orderDto.BasketId)?? throw new BasketNotFoundException(Email);
 
+            ArgumentNullException.ThrowIfNull(Basket.paymentIntentId);
+            var orderSpec = new OrderWithSpecifications(Basket.paymentIntentId);
+            var OrderRepo = _unitOfWork.GetRepository<Order, Guid>();
+            var ExisitingOrder =await OrderRepo.GetByIdAsync(orderSpec);
+            if (ExisitingOrder is not null) OrderRepo.Delete(ExisitingOrder);
             //Create OrderItem List
             List<OrderItem> orderItems = [];
+            
             var ProductRepo = _unitOfWork.GetRepository<Product, int>();
             foreach(var item in Basket.Items)
             {
@@ -42,11 +48,11 @@ namespace Service
             //calculate sub Total
             var SubTotal=orderItems.Sum(I=>I.Quantity*I.Price);
 
-            var Order = new Order(Email, OrderAddress, DeliveryMethod, SubTotal, orderItems);
+            var Order = new Order(Email, OrderAddress, DeliveryMethod, SubTotal, orderItems,Basket.paymentIntentId);
 
             //Add Order To Order Tbl
 
-           await _unitOfWork.GetRepository<Order,Guid>().AddAsync(Order);
+           await OrderRepo.AddAsync(Order);
             await _unitOfWork.SaveChangesAsync();
 
             return _mapper.Map<Order, OrderToReturn>(Order);

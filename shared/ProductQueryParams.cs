@@ -14,11 +14,11 @@ namespace shared
 
         public int? BrandId { get; set; }
 
-        public ProductSortingOptions sortingOptions { get; set; }
+        public ProductSortingOptions sort { get; set; }
 
-        public string? SearchValue { get; set; }
+        public string? search { get; set; }
 
-        public int PageIndex { get; set; } = 1;
+        public int pageNumber { get; set; } = 1;
 
         private int pagesize=DefaultPageSize;
 
