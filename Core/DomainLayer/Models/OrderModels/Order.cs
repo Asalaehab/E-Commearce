@@ -13,15 +13,16 @@ namespace DomainLayer.Models.OrderModels
         {
             
         }
-        public Order(string userEmail, OrderAddress address, DeliveryMethod deliveryMethod,  decimal subtotal, ICollection<OrderItem> items)
+        public Order(string userEmail, OrderAddress address, DeliveryMethod deliveryMethod, decimal subtotal, ICollection<OrderItem> items, string paymentIntentId)
         {
             BuyerEmail = userEmail;
             shipToAddress = address;
             DeliveryMethod = deliveryMethod;
             Subtotal = subtotal;
             Items = items;
+            PaymentIntentId = paymentIntentId;
         }
-        
+
         public string BuyerEmail { get; set; } = default!;
 
         public OrderAddress shipToAddress { get; set; } = default!;
@@ -36,6 +37,8 @@ namespace DomainLayer.Models.OrderModels
         //[NotMapped]
         //public decimal Total { get=> SubTotal }
         public decimal GetTotal() => Subtotal + DeliveryMethod.Price;
+
+        public string PaymentIntentId { get; set; }
     }
 
 }

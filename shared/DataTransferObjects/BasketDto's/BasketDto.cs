@@ -18,6 +18,6 @@ namespace shared.DataTransferObjects.BasketDto_s
 
         public int? deliveryMethodId { get; set; }
 
-        public string? shippingPrice { get; set; }
+        public int? shippingPrice { get; set; }
     }
 }
