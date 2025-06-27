@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Peristance.Data.Configrations
+{
+    internal class OrderConfigrations : IEntityTypeConfiguration<Order>
+    {
+        public void Configure(EntityTypeBuilder<Order> builder)
+        {
+            builder.ToTable("Orders");
+
+            builder.Property(O => O.Subtotal)
+                .HasColumnType("decimal(8,2)");
+
+            builder.HasMany(O => O.Items)
+                 .WithOne()
+                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.HasOne(O => O.DeliveryMethod)
+                    .WithMany()
+                    .HasForeignKey(O => O.DeliveryMethodId);
+
+            builder.OwnsOne(O => O.shipToAddress);
+            //to be mapped as column in table order
+        }
+    }
+}
